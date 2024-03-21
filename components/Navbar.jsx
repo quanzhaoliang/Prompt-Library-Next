@@ -6,16 +6,16 @@ import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 import { set } from "mongoose";
 
 const NavBar = () => {
-  const isLoggedIn = true;
+  const { data: session } = useSession();
   const [providers, setProviders] = useState(null);
   const [dropDown, setDropDown] = useState(false);
 
   useEffect(() => {
-    const setProviders = async () => {
+    const setUpProviders = async () => {
       const response = await getProviders();
       setProviders(response);
     };
-    setProviders();
+    setUpProviders();
   }, []);
 
   return (
@@ -33,7 +33,7 @@ const NavBar = () => {
 
       {/* Desktop Nav */}
       <div className="sm:flex hidden">
-        {isLoggedIn ? (
+        {session?.user ?(
           <div className="flex gap-3 md:gap-5">
             <Link href="/create-prompt" className="black_btn">
               Create Prompt
@@ -43,7 +43,7 @@ const NavBar = () => {
             </button>
             <Link href="/profile">
               <Image
-                src="assets/images/profile.svg"
+                src={session?.user.image}
                 alt="Profile"
                 width={40}
                 height={40}
@@ -70,10 +70,10 @@ const NavBar = () => {
 
       {/* Mobile Nav */}
       <div className="sm:hidden flex relative">
-        {isLoggedIn ? (
+        {session?.user ? (
           <div className="flex">
             <Image
-              src="assets/images/profile.svg"
+              src={session?.user.image}
               alt="Profile"
               width={40}
               height={40}
