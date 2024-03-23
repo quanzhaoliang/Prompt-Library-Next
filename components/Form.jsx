@@ -10,7 +10,7 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
         {type} and share amazing prompts with the world!
       </p>
       <form className="mt-10 w-full max-w-2xl flex flex-col gap-7 galssmorphism" onSubmit={handleSubmit}>
-        <label htmlFor="">
+        <label>
           <span className="font-satoshi font-semibold text-base text-gray-700">
             Your AI Prompt
           </span>
@@ -23,7 +23,7 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
            required></textarea>
         </label>
 
-        <label htmlFor="">
+        <label> 
           <span className="font-satoshi font-semibold text-base text-gray-700">
             Tag
           </span>
@@ -31,7 +31,7 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
           <input
            value={post.tag}
            onChange={(e) => setPost({...post, tag: e.target.value})}
-           placeholder="Write your tag here...  (ex. #product, #JavaScript, #Next.js...)"
+           placeholder="Write your tag here...  (ex. product, JavaScript, Next.js...)"
            className="form_input"
            required></input>
         </label>

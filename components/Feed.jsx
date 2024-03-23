@@ -1,25 +1,46 @@
 'use client';
-import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import PromptCard from './PromptCard';
+
+const PromptCardList = ({ data, handleTagClick }) => {
+  return (
+    <div className='mt-16 prompt_layout'>
+      {data.map((post) => (
+        <PromptCard
+          key={post._id}
+          post={post}
+          handleTagClick={handleTagClick}
+        />
+      ))}
+    </div>
+  );
+};
 
 const Feed = () => {
 
   const [searchText, setSearchText] = useState('');
 
   const handleSearchChange = (e) => {
-
+    
   }
 
+  const [posts, setPosts] = useState([]);
+  // Fetch posts from the server
+
+
+
+  useEffect (() => { 
+    const fetchPosts = async () => {
+      const response = await fetch('/api/prompt');
+      const data = await response.json();
+      setPosts(data);
+    }
+    fetchPosts();
+  }, []);
 
   return (
     <section className='feed'>
       <form className='relative w-full flex-center'>
-        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-          <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-          </svg>
-        </div>
         <input
           className='search_input peer ml-2'
           type='text'
@@ -29,6 +50,10 @@ const Feed = () => {
           required
         />
       </form>
+      <PromptCardList
+        data={posts}
+        handleTagClick={(tag) => {}}
+      />
     </section>
   )
 }

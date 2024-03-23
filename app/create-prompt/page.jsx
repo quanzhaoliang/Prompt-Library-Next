@@ -11,7 +11,7 @@ const CreatePrompt = () => {
     const [submitting, setSubmitting] = useState(false);
     const [post, setPost] = useState({
         prompt: '',
-        tags: '',
+        tag: '',
     });
 
     const CreatePrompt = async (e) => {
@@ -22,9 +22,9 @@ const CreatePrompt = () => {
         const response = await fetch('/api/prompt/new', {
           method: 'POST',
           body: JSON.stringify({ //Send the prompt to the server to be saved in the database
-            prompt: post.prompt,
             userId: session?.user.id,
-            tags: post.tags,
+            prompt: post.prompt,
+            tag: post.tag,
           }),
         });
         if (response.ok){
@@ -33,6 +33,7 @@ const CreatePrompt = () => {
       }
       catch(error){
         console.log(error);
+        console.log('Failed to create prompt');
       }
       finally{
         setSubmitting(false);
@@ -50,4 +51,4 @@ const CreatePrompt = () => {
   )
 }
 
-export default CreatePrompt
+export default CreatePrompt;
